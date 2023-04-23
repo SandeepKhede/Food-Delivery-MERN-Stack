@@ -73,9 +73,9 @@ const Home = () => {
     </div>
 
         <div className='container'>
-          {foodCat !== [] ? foodCat.map((data) => {
+          {foodCat !== [] ? foodCat.map((data,i) => {
             return (
-              <div className='row mb-3'>
+              <div className='row mb-3 mx-3' key={i}>
                   <div key={data._id} className='fs-3 m-3'>
                     {data.CategoryName}
                   </div>
@@ -84,7 +84,7 @@ const Home = () => {
                   .map(filterItems => {
                     return (
                       <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
-                          <Card foodName={filterItems.name} options={filterItems.options[0]} imgSrc={filterItems.img}/>
+                          <Card foodItems={filterItems} options={filterItems.options[0]} />
                       </div>
                     )
                   }) : <div>No data found</div>}

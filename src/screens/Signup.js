@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Signup = () => {
     const[credentials,setCredentials]=useState({
@@ -42,6 +44,9 @@ const Signup = () => {
     }
   return (
     <>
+        <div>
+            <Navbar />
+        </div>
         <div className="container">
         <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -67,6 +72,10 @@ const Signup = () => {
             <Link to='/login' className='m-3 btn btn-danger'>Already a user</Link>
             </form>
             </div>
+
+            <div>
+            <Footer />
+        </div>
     </>
   )
 }

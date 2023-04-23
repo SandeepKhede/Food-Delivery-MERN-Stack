@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Badge } from 'react-bootstrap'
 import { Link,useNavigate } from 'react-router-dom'
+import Modal from '../Modal';
+import Cart from '../screens/Cart';
+import { useCart } from './ContextReducer';
 const Navbar = () => {
+  let data = useCart();
+    const [cartView,setCartView] = useState(false);
    const navigate = useNavigate()
    const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -11,7 +17,7 @@ const Navbar = () => {
     <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-success">
   <div className="container-fluid">
-    <Link className="navbar-brand fs-1 fst-italic" to="/">MernApp</Link>
+    <Link className="navbar-brand fs-1 fst-italic" to="/">MernBites</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -23,7 +29,7 @@ const Navbar = () => {
         {
           (localStorage.getItem("authToken")) ? 
           <li className="nav-item">
-          <Link className="nav-link active fs-5" aria-current="page" to="/">My Orders</Link>
+          <Link className="nav-link active fs-5" aria-current="page" to="/myOrder">My Orders</Link>
         </li>
         :''}
       </ul>
@@ -38,8 +44,11 @@ const Navbar = () => {
       </div> : 
       <div >
 
-      <div className="btn bg-white text-succcess mx-1" >My Cart</div>
-   
+      <div className="btn bg-white text-succcess mx-1" onClick={() => setCartView(true)}>
+        My Cart {" "}
+        <Badge pill bg='danger'>{data.length}</Badge>
+        </div>
+      {cartView ? <Modal onClose={() => setCartView(false)}><Cart /></Modal> : null}
       <div className="btn bg-white text-danger mx-1" onClick={handleLogout}>Logout</div>
     
     </div>

@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const[credentials,setCredentials]=useState({
@@ -9,10 +11,10 @@ const Login = () => {
 let navigate = useNavigate()
 const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({
-            email: credentials.email,
-            password:credentials.password
-    }))
+    // console.log(JSON.stringify({
+    //         email: credentials.email,
+    //         password:credentials.password
+    // }))
     const response = await fetch('http://localhost:5000/api/loginuser',{
         method:'POST',
         headers:{
@@ -25,14 +27,15 @@ const handleSubmit = async (e) => {
     })
 
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
 
     if(!json.success){
         alert('Enter valid credentials')
     }
     if(json.success){
+      localStorage.setItem("userEmail",credentials.email);
       localStorage.setItem("authToken",json.authToken);
-      console.log(localStorage.getItem("authToken"))
+      // console.log(localStorage.getItem("authToken"))
       navigate('/')
     }
     // if(json.succcess == true){
@@ -46,6 +49,10 @@ const onChange = (event) => {
     setCredentials({...credentials,[event.target.name]:event.target.value})
 }
   return (
+    <>
+    <div>
+      <Navbar />
+    </div>
     <div>
       <div className="container">
         <form onSubmit={handleSubmit}>
@@ -63,6 +70,11 @@ const onChange = (event) => {
             </form>
             </div>
     </div>
+
+    <div>
+      <Footer />
+    </div>
+    </>
   )
 }
 
